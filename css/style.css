@@ -749,8 +749,11 @@ body {
     display: block;
     transform-origin: center;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%; /* 추가! */
+    left: 50%; /* 추가! */
+    transform: translate(-50%, -50%); /* 추가! */
+    width: 100vw;
+    height: 100vh;
   }
 
   #gameContent {
