@@ -323,6 +323,7 @@ body {
     0 0 100px rgba(255, 215, 0, 0.8), 0 0 150px rgba(255, 215, 0, 0.6);
   position: relative;
   z-index: 10;
+  font-size: 18px;
 }
 
 @keyframes bingoSpectacular {
