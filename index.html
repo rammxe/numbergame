@@ -19,6 +19,20 @@
     <title>숫자 맞추기 게임</title>
   </head>
   <body>
+    <!-- 파티클 효과용 컨테이너 -->
+    <div id="particleContainer"></div>
+
+    <!-- 게임오버 모달 -->
+    <div id="gameoverModal" class="modal">
+      <div class="modal-content">
+        <h2>다시 하시겠습니까?</h2>
+        <div class="modal-buttons">
+          <button class="modal-btn yes-btn">YES</button>
+          <button class="modal-btn no-btn">NO</button>
+        </div>
+      </div>
+    </div>
+
     <!-- 게임기 배경 위에 모든 요소 -->
     <div id="gameContainer">
       <!-- 시작 화면 배경 이미지 -->
