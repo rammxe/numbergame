@@ -288,39 +288,60 @@ body {
 }
 
 #game-text.gameover {
-  animation: gameoverBlink 0.5s ease-in-out infinite alternate;
-  color: #d32f2f;
-  text-shadow: 5px 5px 0px rgba(0, 0, 0, 0.7), 0 0 40px rgba(211, 47, 47, 1);
+  animation: gameoverDramatic 1s ease-in-out infinite;
+  color: #ff0000;
+  text-shadow: 5px 5px 0px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 0, 0, 1),
+    0 0 80px rgba(255, 0, 0, 0.8), 0 0 120px rgba(255, 0, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
-@keyframes gameoverBlink {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
+@keyframes gameoverDramatic {
+  0%,
   100% {
-    transform: scale(1.1);
-    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.15) rotate(-3deg);
+    filter: brightness(1.5);
+  }
+  50% {
+    transform: scale(0.95) rotate(0deg);
+    filter: brightness(0.8);
+  }
+  75% {
+    transform: scale(1.15) rotate(3deg);
+    filter: brightness(1.5);
   }
 }
 
 #game-text.bingo {
-  animation: bingoBurst 0.8s ease-in-out infinite;
+  animation: bingoSpectacular 0.6s ease-in-out infinite;
   color: #ffd700;
   text-shadow: 5px 5px 0px rgba(0, 0, 0, 0.5), 0 0 50px rgba(255, 215, 0, 1),
-    0 0 100px rgba(255, 215, 0, 0.5);
+    0 0 100px rgba(255, 215, 0, 0.8), 0 0 150px rgba(255, 215, 0, 0.6);
+  position: relative;
+  z-index: 10;
 }
 
-@keyframes bingoBurst {
+@keyframes bingoSpectacular {
   0%,
   100% {
     transform: scale(1) rotate(0deg);
+    filter: brightness(1) hue-rotate(0deg);
   }
   25% {
-    transform: scale(1.2) rotate(-5deg);
+    transform: scale(1.3) rotate(-5deg);
+    filter: brightness(1.5) hue-rotate(20deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(0deg);
+    filter: brightness(1.2) hue-rotate(-20deg);
   }
   75% {
-    transform: scale(1.2) rotate(5deg);
+    transform: scale(1.3) rotate(5deg);
+    filter: brightness(1.5) hue-rotate(20deg);
   }
 }
 
@@ -406,13 +427,296 @@ body {
   display: none;
 }
 
+/* ===== 파티클 컨테이너 ===== */
+#particleContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ===== 빙고 효과 - 게임기 흔들흔들 ===== */
+#gameContainer.shake-celebration {
+  animation: celebrationShake 0.8s ease-in-out;
+}
+
+@keyframes celebrationShake {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  10% {
+    transform: translate(-10px, -5px) rotate(-2deg);
+  }
+  20% {
+    transform: translate(10px, 5px) rotate(2deg);
+  }
+  30% {
+    transform: translate(-10px, 5px) rotate(-1deg);
+  }
+  40% {
+    transform: translate(10px, -5px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-5px, -10px) rotate(-2deg);
+  }
+  60% {
+    transform: translate(5px, 10px) rotate(2deg);
+  }
+  70% {
+    transform: translate(-5px, 5px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(5px, -5px) rotate(1deg);
+  }
+  90% {
+    transform: translate(-2px, 2px) rotate(-0.5deg);
+  }
+}
+
+/* ===== 위에서 아래로 떨어지는 폭죽 파티클 ===== */
+.firework-particle-fall {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fireworkFall 2s ease-out forwards;
+}
+
+@keyframes fireworkFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(var(--fall-distance)) rotate(720deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* ===== 무지개 하트 애니메이션 ===== */
+.rainbow-heart {
+  display: inline-block;
+  animation: heartBounce 0.8s ease-in-out infinite;
+  font-size: inherit;
+}
+
+@keyframes heartBounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+/* ===== 게임오버 효과 - 더 극적으로 ===== */
+#gameContainer.ash-effect {
+  animation: ashDisintegrateDramatic 2s ease-out forwards;
+}
+
+@keyframes ashDisintegrateDramatic {
+  0% {
+    filter: brightness(1) blur(0px) grayscale(0);
+    opacity: 1;
+  }
+  30% {
+    filter: brightness(0.7) blur(1px) grayscale(0.3);
+  }
+  60% {
+    filter: brightness(0.4) blur(3px) grayscale(0.7);
+  }
+  100% {
+    filter: brightness(0.2) blur(8px) grayscale(1);
+    opacity: 0.4;
+  }
+}
+
+/* 잿가루 파티클 - 더 많이, 더 극적으로 */
+.ash-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: ashFallDramatic 3s ease-out forwards;
+}
+
+@keyframes ashFallDramatic {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rotate)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* 게임오버 배경 어둡게 */
+#gameContainer.gameover-dark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  z-index: 5;
+  animation: darkenScreen 1.5s ease-out forwards;
+}
+
+@keyframes darkenScreen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== 게임오버 모달 ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  animation: modalFadeIn 0.5s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #2d2d44, #1a1a2e);
+  padding: 50px 40px;
+  border-radius: 25px;
+  border: 6px solid #ff6b6b;
+  box-shadow: 0 0 60px rgba(255, 107, 107, 0.9),
+    0 0 120px rgba(255, 107, 107, 0.5), inset 0 0 40px rgba(255, 107, 107, 0.1);
+  text-align: center;
+  animation: modalBounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalBounceIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15) rotate(5deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.modal-content h2 {
+  font-family: "Sixtyfour", sans-serif;
+  color: #fff;
+  font-size: 40px;
+  margin-bottom: 35px;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.6);
+  animation: modalTextPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes modalTextPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.7),
+      0 0 30px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    transform: scale(1.05);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.7),
+      0 0 50px rgba(255, 255, 255, 0.9);
+  }
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+}
+
+.modal-btn {
+  font-family: "Sixtyfour", sans-serif;
+  font-size: 32px;
+  padding: 18px 60px;
+  border: 5px solid;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.yes-btn {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  border-color: #2d6b2f;
+  box-shadow: 0 6px 0 #2d6b2f, 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.yes-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0 #2d6b2f, 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+
+.yes-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #2d6b2f, 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.no-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  border-color: #c44444;
+  box-shadow: 0 6px 0 #c44444, 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.no-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0 #c44444, 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+
+.no-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #c44444, 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
 /* ===== 모바일 ===== */
 @media (max-width: 767px) {
   body {
-    position: fixed; /* 추가! */
+    position: fixed;
     width: 100%;
   }
-  /* 모바일에서는 PC 배경 숨기고 모바일 배경만 */
   .game-background-pc {
     display: none !important;
   }
@@ -438,14 +742,14 @@ body {
   }
 
   #startScreen h1 {
-    font-size: 3rem;
+    font-size: 1.5rem;
     line-height: 1.1;
     text-shadow: 2px 2px 0px rgba(0, 212, 255, 0.6),
       -2px -2px 0px rgba(255, 107, 214, 0.6);
   }
 
   .pixel-button {
-    font-size: 22px;
+    font-size: 15px;
     padding: 13px 38px;
     border: 3px solid #003d66;
     border-radius: 11px;
@@ -561,7 +865,6 @@ body {
     border: 3px solid #c44444;
     box-shadow: 0 4px 0 #c44444, 0 7px 14px rgba(0, 0, 0, 0.3);
     cursor: pointer;
-    box-shadow: 0 4px 0 #c44444, 0 7px 14px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
   }
 
@@ -574,11 +877,31 @@ body {
     transform: translateY(2px);
     box-shadow: 0 2px 0 #c44444, 0 4px 8px rgba(0, 0, 0, 0.3);
   }
+
+  /* 모바일 모달 */
+  .modal-content {
+    padding: 35px 25px;
+    width: 90%;
+    max-width: 380px;
+  }
+
+  .modal-content h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+
+  .modal-buttons {
+    gap: 15px;
+  }
+
+  .modal-btn {
+    font-size: 22px;
+    padding: 14px 40px;
+  }
 }
 
 /* ===== 태블릿 ===== */
 @media (min-width: 768px) and (max-width: 1199px) {
-  /* 태블릿에서는 PC 배경 숨기고 모바일 배경만 */
   .game-background-pc {
     display: none !important;
   }
@@ -723,7 +1046,6 @@ body {
     border: 3px solid #c44444;
     box-shadow: 0 4px 0 #c44444, 0 7px 14px rgba(0, 0, 0, 0.3);
     cursor: pointer;
-    box-shadow: 0 4px 0 #c44444, 0 7px 14px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
   }
 
@@ -736,11 +1058,25 @@ body {
     transform: translateY(2px);
     box-shadow: 0 2px 0 #c44444, 0 4px 8px rgba(0, 0, 0, 0.3);
   }
+
+  /* 태블릿 모달 */
+  .modal-content {
+    padding: 40px 30px;
+  }
+
+  .modal-content h2 {
+    font-size: 34px;
+    margin-bottom: 30px;
+  }
+
+  .modal-btn {
+    font-size: 28px;
+    padding: 16px 50px;
+  }
 }
 
 /* ===== 데스크탑 ===== */
 @media (min-width: 1200px) {
-  /* 데스크탑에서는 모바일 배경 숨기고 PC 배경만 */
   .game-background-mobile {
     display: none !important;
   }
@@ -749,9 +1085,9 @@ body {
     display: block;
     transform-origin: center;
     position: fixed;
-    top: 50%; /* 추가! */
-    left: 50%; /* 추가! */
-    transform: translate(-50%, -50%); /* 추가! */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
   }
