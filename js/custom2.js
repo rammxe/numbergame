@@ -157,7 +157,7 @@ function start() {
     gameText.textContent = "DOWN DOWN DOWN";
     gameText.className = "down";
   } else {
-    gameText.textContent = "🎉 BINGO! 🎉";
+    gameText.textContent = "🎉BINGO!🎉";
     gameText.className = "bingo";
     gameEnd = true;
 
